@@ -53,8 +53,8 @@ export default function CircleOfFifths({ selectedKey, currentMode, onKeySelect }
   const sliceAngle = 360 / 12
 
   return (
-    <div className="flex flex-col items-center gap-2">
-      <svg viewBox="0 0 400 400" width="340" height="340" className="drop-shadow-xl">
+    <div className="flex flex-col items-center gap-4">
+      <svg viewBox="0 0 400 400" width="340" height="340" className="drop-shadow-2xl">
         {/* Outer ring — Major keys */}
         {MAJOR_ORDER.map((label, i) => {
           const start = i * sliceAngle - sliceAngle / 2
@@ -69,21 +69,33 @@ export default function CircleOfFifths({ selectedKey, currentMode, onKeySelect }
             <g key={`major-${label}`} onClick={() => onKeySelect(keyId, 'major')} className="cursor-pointer">
               <path
                 d={sectorPath(start, end, R_MAJOR_IN, R_MAJOR_OUT)}
-                fill={isSelected ? '#f59e0b' : isVN ? '#1e3a5f' : '#1e293b'}
-                stroke="#0f172a"
-                strokeWidth="1.5"
-                className="transition-all hover:brightness-125"
+                fill={
+                  isSelected 
+                    ? '#f59e0b' 
+                    : isVN 
+                      ? 'linear-gradient(135deg, #1e3a5f, #1e2a3a)' 
+                      : 'linear-gradient(135deg, #1e293b, #0f172a)'
+                }
+                stroke={isSelected ? '#fbbf24' : '#334155'}
+                strokeWidth={isSelected ? 2.5 : 1.2}
+                className="transition-all duration-300 hover:brightness-125 hover:scale-[1.02]"
+                style={{ transformOrigin: `${CX}px ${CY}px` }}
               />
               <text
                 x={textPos.x} y={textPos.y}
                 textAnchor="middle" dominantBaseline="middle"
-                fontSize="13" fontWeight={isSelected ? 'bold' : 'normal'}
-                fill={isSelected ? '#0f172a' : isVN ? '#fbbf24' : '#e2e8f0'}
+                fontSize="13" 
+                fontWeight={isSelected ? 'bold' : '500'}
+                fill={isSelected ? '#ffffff' : isVN ? '#fcd34d' : '#cbd5e1'}
+                className="select-none"
               >
                 {label}
               </text>
               {isVN && !isSelected && (
-                <circle cx={textPos.x + 14} cy={textPos.y - 10} r="3" fill="#ef4444" />
+                <g transform={`translate(${textPos.x + 14}, ${textPos.y - 10})`}>
+                  <circle r="4" fill="#ef4444" opacity="0.9" />
+                  <circle r="1.5" fill="#ffffff" opacity="0.6" />
+                </g>
               )}
             </g>
           )
@@ -103,43 +115,63 @@ export default function CircleOfFifths({ selectedKey, currentMode, onKeySelect }
             <g key={`minor-${label}`} onClick={() => onKeySelect(keyId, 'minor')} className="cursor-pointer">
               <path
                 d={sectorPath(start, end, R_MINOR_IN, R_MINOR_OUT)}
-                fill={isSelected ? '#6366f1' : isVN ? '#1a2e4a' : '#0f172a'}
-                stroke="#1e293b"
-                strokeWidth="1.5"
-                className="transition-all hover:brightness-125"
+                fill={
+                  isSelected 
+                    ? '#8b5cf6' 
+                    : isVN 
+                      ? '#2d1b4e' 
+                      : '#1a1f2e'
+                }
+                stroke={isSelected ? '#a78bfa' : '#334155'}
+                strokeWidth={isSelected ? 2.5 : 1.2}
+                className="transition-all duration-300 hover:brightness-125 hover:scale-[1.02]"
+                style={{ transformOrigin: `${CX}px ${CY}px` }}
               />
               <text
                 x={textPos.x} y={textPos.y}
                 textAnchor="middle" dominantBaseline="middle"
-                fontSize="10" fontWeight={isSelected ? 'bold' : 'normal'}
-                fill={isSelected ? '#fff' : isVN ? '#93c5fd' : '#94a3b8'}
+                fontSize="11" 
+                fontWeight={isSelected ? 'bold' : '500'}
+                fill={isSelected ? '#ffffff' : isVN ? '#d8b4fe' : '#94a3b8'}
+                className="select-none"
               >
                 {label}
               </text>
               {isVN && !isSelected && (
-                <circle cx={textPos.x + 11} cy={textPos.y - 8} r="2.5" fill="#ef4444" />
+                <g transform={`translate(${textPos.x + 11}, ${textPos.y - 8})`}>
+                  <circle r="3.5" fill="#ef4444" opacity="0.9" />
+                  <circle r="1.2" fill="#ffffff" opacity="0.6" />
+                </g>
               )}
             </g>
           )
         })}
 
         {/* Center label */}
-        <circle cx={CX} cy={CY} r={R_MINOR_IN - 2} fill="#020617" />
-        <text x={CX} y={CY - 8} textAnchor="middle" fontSize="11" fill="#64748b">Circle of</text>
-        <text x={CX} y={CY + 8} textAnchor="middle" fontSize="11" fill="#64748b">Fifths</text>
+        <circle cx={CX} cy={CY} r={R_MINOR_IN - 2} fill="#0a0f1a" stroke="#1e293b" strokeWidth="2" />
+        <circle cx={CX} cy={CY} r={R_MINOR_IN - 6} fill="#0f1420" />
+        <text x={CX} y={CY - 8} textAnchor="middle" fontSize="11" fontWeight="600" fill="#64748b" letterSpacing="1">
+          Circle of
+        </text>
+        <text x={CX} y={CY + 8} textAnchor="middle" fontSize="11" fontWeight="700" fill="#8b5cf6" letterSpacing="2">
+          FIFTHS
+        </text>
       </svg>
 
       {/* Legend */}
-      <div className="flex gap-4 text-xs text-slate-400">
-        <span className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-amber-500 inline-block" /> Major
-        </span>
-        <span className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-indigo-500 inline-block" /> Minor
-        </span>
-        <span className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-red-500 inline-block" /> 🇻🇳 Nhạc Việt
-        </span>
+      <div className="flex gap-6 text-xs">
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 rounded-lg backdrop-blur-sm">
+          <div className="w-3 h-3 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 shadow-sm"></div>
+          <span className="text-slate-300 font-medium">Major</span>
+        </div>
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 rounded-lg backdrop-blur-sm">
+          <div className="w-3 h-3 rounded-full bg-gradient-to-br from-violet-400 to-violet-600 shadow-sm"></div>
+          <span className="text-slate-300 font-medium">Minor</span>
+        </div>
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 rounded-lg backdrop-blur-sm">
+          <div className="w-3 h-3 rounded-full bg-gradient-to-br from-red-500 to-rose-600 shadow-sm"></div>
+          <span className="text-slate-300 font-medium">🇻🇳 Nhạc Việt</span>
+        </div>
       </div>
     </div>
   )
