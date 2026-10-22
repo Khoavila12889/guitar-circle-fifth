@@ -10,8 +10,8 @@ export const MINOR_KEYS: MusicalKey[] = [
   { id: 'Dm',  label: 'Dm (Rê thứ)',           mode: 'minor', chords: ['Dm',  'Gm',  'C',  'F',  'Bb', 'Em7b5',  'A7'],  isVietnamesePopular: true },
   { id: 'Gm',  label: 'Gm (Son thứ)',          mode: 'minor', chords: ['Gm',  'Cm',  'F',  'Bb', 'Eb', 'Am7b5',  'D7']  },
   { id: 'Cm',  label: 'Cm (Đô thứ)',           mode: 'minor', chords: ['Cm',  'Fm',  'Bb', 'Eb', 'Ab', 'Dm7b5',  'G7']  },
-  { id: 'Fm',  label: 'Fm (Fa thứ)',           mode: 'minor', chords: ['Fm',  'Bbm', 'Ab', 'Db', 'Gb', 'Bm7b5',  'C7']  },
-  { id: 'Bbm', label: 'Bbm (Si giáng thứ)',    mode: 'minor', chords: ['Bbm', 'Ebm', 'Ab', 'Db', 'Gb', 'Em7b5',  'F7']  },
+  { id: 'Fm',  label: 'Fm (Fa thứ)',           mode: 'minor', chords: ['Fm',  'Bbm', 'Eb', 'Ab', 'Db', 'Gm7b5',  'C7']  },
+  { id: 'Bbm', label: 'Bbm (Si giáng thứ)',    mode: 'minor', chords: ['Bbm', 'Ebm', 'Ab', 'Db', 'Gb', 'Cm7b5',  'F7']  },
   { id: 'D#m', label: 'D#m (Rê thăng thứ)',    mode: 'minor', chords: ['D#m', 'G#m', 'C#', 'F#', 'B',  'E#m7b5', 'A#7'] },
   { id: 'G#m', label: 'G#m (Sol thăng thứ)',   mode: 'minor', chords: ['G#m', 'C#m', 'F#', 'B',  'E',  'A#m7b5', 'D#7'] },
   { id: 'Bm',  label: 'Bm (Si thứ)',           mode: 'minor', chords: ['Bm',  'Em',  'A',  'D',  'G',  'C#m7b5', 'F#7'] },
@@ -19,15 +19,23 @@ export const MINOR_KEYS: MusicalKey[] = [
   { id: 'C#m', label: 'C#m (Đô thăng thứ)',    mode: 'minor', chords: ['C#m', 'F#m', 'B',  'E',  'A',  'D#m7b5', 'G#7'] },
 ]
 
-// 7 major keys — công thức I-IV-vii°-iii-vi-ii-V7
+// Clockwise order shown in the outer ring of the Circle of Fifths.
+export const MAJOR_CIRCLE_ORDER = ['C', 'G', 'D', 'A', 'E', 'B', 'F#', 'Db', 'Ab', 'Eb', 'Bb', 'F']
+
+// All 12 major keys shown by the Circle of Fifths.
 export const MAJOR_KEYS: MusicalKey[] = [
   { id: 'C',  label: 'C (Đô trưởng)',          mode: 'major', chords: ['C',  'F',  'Bdim',  'Em', 'Am', 'Dm', 'G7'],  isVietnamesePopular: true },
-  { id: 'G',  label: 'G (Sol trưởng)',          mode: 'major', chords: ['G',  'C',  'F#dim', 'Bm', 'Em', 'Am', 'D7'],  isVietnamesePopular: true },
-  { id: 'D',  label: 'D (Rê trưởng)',           mode: 'major', chords: ['D',  'G',  'C#dim', 'F#m','Bm', 'Em', 'A7']  },
-  { id: 'A',  label: 'A (La trưởng)',           mode: 'major', chords: ['A',  'D',  'G#dim', 'C#m','F#m','Bm', 'E7']  },
-  { id: 'E',  label: 'E (Mi trưởng)',           mode: 'major', chords: ['E',  'A',  'D#dim', 'G#m','C#m','F#m','B7']  },
-  { id: 'F',  label: 'F (Fa trưởng)',           mode: 'major', chords: ['F',  'Bb', 'Edim',  'Am', 'Dm', 'Gm', 'C7'],  isVietnamesePopular: true },
-  { id: 'Bb', label: 'Bb (Si giáng trưởng)',    mode: 'major', chords: ['Bb', 'Eb', 'Adim',  'Dm', 'Gm', 'Cm', 'F7']  },
+  { id: 'G',  label: 'G (Sol trưởng)',         mode: 'major', chords: ['G',  'C',  'F#dim', 'Bm', 'Em', 'Am', 'D7'],  isVietnamesePopular: true },
+  { id: 'D',  label: 'D (Rê trưởng)',          mode: 'major', chords: ['D',  'G',  'C#dim', 'F#m','Bm', 'Em', 'A7']  },
+  { id: 'A',  label: 'A (La trưởng)',          mode: 'major', chords: ['A',  'D',  'G#dim', 'C#m','F#m','Bm', 'E7']  },
+  { id: 'E',  label: 'E (Mi trưởng)',          mode: 'major', chords: ['E',  'A',  'D#dim', 'G#m','C#m','F#m','B7']  },
+  { id: 'B',  label: 'B (Si trưởng)',          mode: 'major', chords: ['B',  'E',  'A#dim', 'D#m','G#m','C#m','F#7'] },
+  { id: 'F#', label: 'F# (Fa thăng trưởng)',   mode: 'major', chords: ['F#', 'B',  'E#dim', 'A#m','D#m','G#m','C#7'] },
+  { id: 'Db', label: 'Db (Rê giáng trưởng)',   mode: 'major', chords: ['Db', 'Gb', 'Cdim',  'Fm', 'Bbm','Ebm','Ab7'] },
+  { id: 'Ab', label: 'Ab (La giáng trưởng)',   mode: 'major', chords: ['Ab', 'Db', 'Gdim',  'Cm', 'Fm', 'Bbm','Eb7'] },
+  { id: 'Eb', label: 'Eb (Mi giáng trưởng)',   mode: 'major', chords: ['Eb', 'Ab', 'Ddim',  'Gm', 'Cm', 'Fm', 'Bb7'] },
+  { id: 'Bb', label: 'Bb (Si giáng trưởng)',   mode: 'major', chords: ['Bb', 'Eb', 'Adim',  'Dm', 'Gm', 'Cm', 'F7']  },
+  { id: 'F',  label: 'F (Fa trưởng)',          mode: 'major', chords: ['F',  'Bb', 'Edim',  'Am', 'Dm', 'Gm', 'C7'],  isVietnamesePopular: true },
 ]
 
 export const ROLE_DESCRIPTIONS_MINOR: Record<string, string> = {

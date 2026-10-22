@@ -1,19 +1,8 @@
 import type { ScaleMode } from '../types'
+import { MAJOR_CIRCLE_ORDER } from '../data/keys'
 
 // Circle of Fifths order (clockwise from top)
-const MAJOR_ORDER = ['C', 'G', 'D', 'A', 'E', 'B', 'F#', 'Db', 'Ab', 'Eb', 'Bb', 'F']
 const MINOR_ORDER = ['Am', 'Em', 'Bm', 'F#m', 'C#m', 'G#m', 'D#m', 'Bbm', 'Fm', 'Cm', 'Gm', 'Dm']
-
-// Map display label → key id used in data store
-const MAJOR_ID_MAP: Record<string, string> = {
-  'C': 'C', 'G': 'G', 'D': 'D', 'A': 'A', 'E': 'E', 'B': 'E',
-  'F#': 'F#', 'Db': 'D', 'Ab': 'A', 'Eb': 'D', 'Bb': 'Bb', 'F': 'F',
-}
-const MINOR_ID_MAP: Record<string, string> = {
-  'Am': 'Am', 'Em': 'Em', 'Bm': 'Bm', 'F#m': 'F#m', 'C#m': 'C#m',
-  'G#m': 'G#m', 'D#m': 'D#m', 'Bbm': 'Bbm', 'Fm': 'Fm', 'Cm': 'Cm',
-  'Gm': 'Gm', 'Dm': 'Dm',
-}
 
 // Vietnamese popular keys
 const VN_MAJOR = new Set(['C', 'G', 'F'])
@@ -56,25 +45,32 @@ export default function CircleOfFifths({ selectedKey, currentMode, onKeySelect }
     <div className="flex flex-col items-center gap-4">
       <svg viewBox="0 0 400 400" width="340" height="340" className="drop-shadow-2xl">
         {/* Outer ring — Major keys */}
-        {MAJOR_ORDER.map((label, i) => {
+        {MAJOR_CIRCLE_ORDER.map((label, i) => {
           const start = i * sliceAngle - sliceAngle / 2
           const end = start + sliceAngle
           const mid = (start + end) / 2
-          const keyId = MAJOR_ID_MAP[label] ?? label
+          const keyId = label
           const isSelected = currentMode === 'major' && selectedKey === keyId
           const isVN = VN_MAJOR.has(label)
           const textPos = polarToXY(mid, (R_MAJOR_OUT + R_MAJOR_IN) / 2)
 
           return (
-            <g key={`major-${label}`} onClick={() => onKeySelect(keyId, 'major')} className="cursor-pointer">
+            <g key={`major-${label}`} role="button" tabIndex={0} aria-label={`${label} trưởng`} aria-pressed={isSelected}
+              onClick={() => onKeySelect(keyId, 'major')}
+              onKeyDown={event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault()
+                  onKeySelect(keyId, 'major')
+                }
+              }} className="cursor-pointer">
               <path
                 d={sectorPath(start, end, R_MAJOR_IN, R_MAJOR_OUT)}
                 fill={
                   isSelected 
                     ? '#f59e0b' 
                     : isVN 
-                      ? 'linear-gradient(135deg, #1e3a5f, #1e2a3a)' 
-                      : 'linear-gradient(135deg, #1e293b, #0f172a)'
+                      ? '#1e3a5f'
+                      : '#1e293b'
                 }
                 stroke={isSelected ? '#fbbf24' : '#334155'}
                 strokeWidth={isSelected ? 2.5 : 1.2}
@@ -106,13 +102,20 @@ export default function CircleOfFifths({ selectedKey, currentMode, onKeySelect }
           const start = i * sliceAngle - sliceAngle / 2
           const end = start + sliceAngle
           const mid = (start + end) / 2
-          const keyId = MINOR_ID_MAP[label] ?? label
+          const keyId = label
           const isSelected = currentMode === 'minor' && selectedKey === keyId
           const isVN = VN_MINOR.has(label)
           const textPos = polarToXY(mid, (R_MINOR_OUT + R_MINOR_IN) / 2)
 
           return (
-            <g key={`minor-${label}`} onClick={() => onKeySelect(keyId, 'minor')} className="cursor-pointer">
+            <g key={`minor-${label}`} role="button" tabIndex={0} aria-label={`${label} thứ`} aria-pressed={isSelected}
+              onClick={() => onKeySelect(keyId, 'minor')}
+              onKeyDown={event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault()
+                  onKeySelect(keyId, 'minor')
+                }
+              }} className="cursor-pointer">
               <path
                 d={sectorPath(start, end, R_MINOR_IN, R_MINOR_OUT)}
                 fill={

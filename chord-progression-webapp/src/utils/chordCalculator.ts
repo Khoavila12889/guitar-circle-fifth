@@ -1,11 +1,7 @@
 import type { ScaleMode, MusicalKey } from '../types'
 
-const CHROMATIC_SCALE = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-
-// Enharmonic equivalents → normalize to sharps
-const ENHARMONIC: Record<string, string> = {
-  Db: 'C#', Eb: 'D#', Fb: 'E', Gb: 'F#', Ab: 'G#', Bb: 'A#', Cb: 'B',
-}
+const LETTERS = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
+const NATURAL_PITCHES = [0, 2, 4, 5, 7, 9, 11]
 
 const MINOR_INTERVALS = [0, 2, 3, 5, 7, 8, 10] // natural minor scale
 const MAJOR_INTERVALS = [0, 2, 4, 5, 7, 9, 11] // major scale
@@ -13,14 +9,9 @@ const MAJOR_INTERVALS = [0, 2, 4, 5, 7, 9, 11] // major scale
 // Degree sequence: [1,4,7,3,6,2,5] → scale indices [0,3,6,2,5,1,4]
 const DEGREE_SEQUENCE_INDICES = [0, 3, 6, 2, 5, 1, 4]
 
-// Chord quality per scale degree (0-indexed) for minor and major
-const MINOR_CHORD_QUALITY = ['m', 'm', 'maj', 'maj', 'maj', 'dim7b5', '7']
-const MAJOR_CHORD_QUALITY = ['maj', 'maj', 'dim', 'm', 'm', 'm', '7']
-
-function normalizeRoot(root: string): string {
-  if (ENHARMONIC[root]) return ENHARMONIC[root]
-  return root
-}
+// Chord quality per scale degree (I–VII), indexed by scale position.
+const MINOR_CHORD_QUALITY = ['m', 'dim7b5', 'maj', 'm', '7', 'maj', 'maj']
+const MAJOR_CHORD_QUALITY = ['maj', 'm', 'm', 'maj', '7', 'm', 'dim']
 
 function buildChordName(note: string, quality: string): string {
   switch (quality) {
@@ -34,15 +25,20 @@ function buildChordName(note: string, quality: string): string {
 }
 
 export function computeChordsFromRoot(root: string, mode: ScaleMode): string[] {
-  const normalized = normalizeRoot(root)
-  const rootIndex = CHROMATIC_SCALE.indexOf(normalized)
-  if (rootIndex === -1) throw new Error('Root note không hợp lệ')
+  if (!/^[A-G][#b]?$/.test(root)) throw new Error('Root note không hợp lệ')
+  const letterIndex = LETTERS.indexOf(root[0])
+  const rootPitch = NATURAL_PITCHES[letterIndex] + (root[1] === '#' ? 1 : root[1] === 'b' ? -1 : 0)
 
   const intervals = mode === 'minor' ? MINOR_INTERVALS : MAJOR_INTERVALS
   const qualities = mode === 'minor' ? MINOR_CHORD_QUALITY : MAJOR_CHORD_QUALITY
 
   // Build 7-note scale
-  const scale = intervals.map(i => CHROMATIC_SCALE[(rootIndex + i) % 12])
+  const scale = intervals.map((interval, i) => {
+    const index = (letterIndex + i) % 7
+    const difference = ((rootPitch + interval - NATURAL_PITCHES[index] + 18) % 12) - 6
+    const accidental = difference < 0 ? 'b'.repeat(-difference) : '#'.repeat(difference)
+    return LETTERS[index] + accidental
+  })
 
   // Apply degree sequence [1,4,7,3,6,2,5]
   return DEGREE_SEQUENCE_INDICES.map(idx => buildChordName(scale[idx], qualities[idx]))
