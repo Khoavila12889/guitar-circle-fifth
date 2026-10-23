@@ -8,7 +8,7 @@ Web: https://khoavila12889.github.io/guitar-circle-fifth/
 
 - Vòng tròn quãng năm: chọn tông Major/Minor, chuyển chế độ và cập nhật vòng hợp âm.
 - Tự tạo tông, bao gồm dấu thăng/giáng; hiển thị bậc, tên và vai trò hợp âm.
-- Thế bấm Guitar: xem toàn bộ vòng hoặc chọn riêng từng hợp âm; ngón tay, dây buông, dây không gảy và barre. Hợp âm chưa có dữ liệu được thông báo rõ.
+- Thế bấm Guitar: đủ các hợp âm trong mọi tông có sẵn và tông tự tạo, kể cả tên thăng/giáng đồng âm. Xem toàn bộ vòng với hai cột trên mobile, chạm từng hợp âm để phóng to; hiển thị ngón tay, dây buông, dây không gảy, barre, tên dây và ngăn bắt đầu. Đây là chức năng cốt lõi của ứng dụng hướng dẫn, cần luôn to và rõ.
 - **Thực chiến — Phát nhạc & Luyện tập**: mở panel, dán URL rồi bấm **Phát** hoặc Enter; xóa/đổi bài; vòng hợp âm luôn theo tông đang chọn.
   - YouTube: watch, youtu.be, embed, shorts; phát nhúng và chỉnh âm lượng nhạc nền riêng (0–100%).
   - SoundCloud: phát nhúng.

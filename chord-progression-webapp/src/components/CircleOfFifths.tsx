@@ -62,7 +62,7 @@ export default function CircleOfFifths({ selectedKey, currentMode, onKeySelect }
                   event.preventDefault()
                   onKeySelect(keyId, 'major')
                 }
-              }} className="cursor-pointer">
+              }} className="cursor-pointer outline-none focus-visible:[&>path]:brightness-150">
               <path
                 d={sectorPath(start, end, R_MAJOR_IN, R_MAJOR_OUT)}
                 fill={
@@ -115,7 +115,7 @@ export default function CircleOfFifths({ selectedKey, currentMode, onKeySelect }
                   event.preventDefault()
                   onKeySelect(keyId, 'minor')
                 }
-              }} className="cursor-pointer">
+              }} className="cursor-pointer outline-none focus-visible:[&>path]:brightness-150">
               <path
                 d={sectorPath(start, end, R_MINOR_IN, R_MINOR_OUT)}
                 fill={
