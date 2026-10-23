@@ -8,6 +8,8 @@ import ChordProgressionDisplay from './components/ChordProgressionDisplay'
 import VariationPanel from './components/VariationPanel'
 import PracticeGuide from './components/PracticeGuide'
 import CustomKeyBuilder from './components/CustomKeyBuilder'
+import GuitarChordPanel from './components/GuitarChordPanel'
+import PracticePlayer from './components/PracticePlayer'
 
 const DEFAULT_KEY: Record<ScaleMode, string> = { minor: 'Em', major: 'C' }
 
@@ -93,6 +95,8 @@ export default function App() {
           {/* Right: Chord display + panels */}
           <div className="flex-1 flex flex-col gap-4 min-w-0">
             <ChordProgressionDisplay progression={progression} />
+            <GuitarChordPanel chordDetails={progression.chordDetails} />
+            <PracticePlayer chordDetails={progression.chordDetails} keyLabel={progression.key.label} />
             <VariationPanel
               keyId={progression.key.id.replace('_custom', '')}
               getVariations={getVariations}
